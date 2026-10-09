@@ -13,11 +13,13 @@ COPY environment.yml .
 RUN conda env create -f environment.yml -n swine_flu_tracker_env
 
 # SHELL ["conda", "run", "-n", "swine_flu_tracker_env", "/bin/bash", "-c"]
-
+# Make the env's binaries visible to subprocesses spawned from Python
+ENV PATH=/opt/conda/envs/swine_flu_tracker_env/bin:/opt/conda/bin:$PATH
 RUN git clone https://github.com/flu-crew/octoFLU.git /opt/octoFLU
 
 COPY run_all.py /app/run_all.py
 
 RUN /opt/conda/envs/swine_flu_tracker_env/bin/python -c "import Bio; print('biopython', Bio.__version__)"
+RUN which blastn makeblastdb mafft FastTree smof && echo "octoFLU deps OK"
 
 ENTRYPOINT ["/opt/conda/envs/swine_flu_tracker_env/bin/python", "/app/run_all.py"]
