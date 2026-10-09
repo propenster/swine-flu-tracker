@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   },
   output: "export",
   images: {unoptimized: true},
-  cacheComponents: true,
+  // cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
     rules: {
