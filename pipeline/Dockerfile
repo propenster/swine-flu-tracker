@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 continuumio/miniconda3:latest
+FROM continuumio/miniconda3:latest
 
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -12,13 +12,12 @@ COPY environment.yml .
 
 RUN conda env create -f environment.yml -n swine_flu_tracker_env
 
-SHELL ["conda", "run", "-n", "swine_flu_tracker_env", "/bin/bash", "-c"]
+# SHELL ["conda", "run", "-n", "swine_flu_tracker_env", "/bin/bash", "-c"]
 
 RUN git clone https://github.com/flu-crew/octoFLU.git /opt/octoFLU
 
-COPY . /app
+COPY run_all.py /app/run_all.py
 
-#fastapi uvicorn server
-EXPOSE 8000
+RUN /opt/conda/envs/swine_flu_tracker_env/bin/python -c "import Bio; print('biopython', Bio.__version__)"
 
-ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "swine_flu_tracker_env", "python", "/app/run_all.py"]
+ENTRYPOINT ["/opt/conda/envs/swine_flu_tracker_env/bin/python", "/app/run_all.py"]
