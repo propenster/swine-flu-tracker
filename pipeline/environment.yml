@@ -1,0 +1,33 @@
+name: swine_flu_tracker_env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - pandas
+  - numpy
+  - scipy
+  - numba
+  - biopython=1.83
+  - mafft
+  - treetime
+  - fasttree
+  - blast
+  - pip:
+    - nextstrain-augur
+    - fastapi
+    - uvicorn[standard]
+    - pydantic
+    - redis
+    - celery[redis]
+    - flutile
+    - fastparquet
+    - pyarrow
+    - dendropy
+    - smof
+    - boto3
+    - aiofiles
+    - python-multipart
+    - requests
