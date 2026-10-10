@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/dist/client/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,8 +25,20 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=G-9VFDHH991S`}
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9VFDHH991S');
+  `}
+      </Script>
       <body className="min-h-full flex flex-col">{children}</body>
-      <GoogleAnalytics gaId="G-9VFDHH991S" />
+      {/* <GoogleAnalytics gaId="G-9VFDHH991S" /> */}
     </html>
   );
 }
